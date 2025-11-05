@@ -10,7 +10,7 @@ explicar(resultado(plano(Plano), preco_mensal(Preco), preco_anual(PrecoAnual), a
     (obs(have_kids(HK)) -> true ; HK = nao),
     (obs(pref_musica(M)) -> true ; M = nao),
     (obs(tem_desconto_estudantil(Stu)) -> true ; Stu = nao),
-    (obs(budget(Bud)) -> true ; Bud = desconhecido),
+    (obs(orcamento(Orc)) -> true ; Orc = desconhecido),
 
     format("~n[Explicacao]~n"),
     format("- Regras disparadas (trilha): ~w~n", [Motivos]),
@@ -26,4 +26,4 @@ explicar(resultado(plano(Plano), preco_mensal(Preco), preco_anual(PrecoAnual), a
     format("- Conteudo infantil: ~w~n", [HK]),
     format("- Musica: ~w~n", [M]),
     format("- Estudante: ~w~n", [Stu]),
-    format("- Budget: ~w~n", [Bud]).
+    format("- Orcamento: ~w~n", [Orc]).
