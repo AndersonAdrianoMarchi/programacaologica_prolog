@@ -13,8 +13,10 @@ banner :-
 menu :-
     format("1) Executar consulta~n2) Sair~n> "),
     read(Opt),
+    --------------------------------------
     ( Opt = 1 -> run_case, cleanup, menu
     ; Opt = 2 -> format("Saindo...~n")
+    --------------------------------------
     ; format("Opcao invalida.~n"), menu ).
 
 run_case :-
