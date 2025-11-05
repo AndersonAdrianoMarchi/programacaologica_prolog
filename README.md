@@ -24,16 +24,14 @@ O sistema faz inferências automáticas usando fatos e regras lógicas e fornece
 💻 Instalação
 🔹 Requisitos:
 
-SWI-Prolog (versão 8.0 ou superior)
-Baixar em: https://www.swi-prolog.org/Download.html
+SWI-Prolog 
+Baixar em: https://www.swi-prolog.org/download/stable
 
 🔹 Passos de instalação:
 
 Clone o repositório (ou copie os arquivos):
 
-git clone https://github.com/andersonmarchi/streaming_expert.git
-cd streaming_expert/src
-
+git clone https://github.com/AndersonAdrianoMarchi/programacaologica_prolog.git
 
 Inicie o SWI-Prolog:
 
