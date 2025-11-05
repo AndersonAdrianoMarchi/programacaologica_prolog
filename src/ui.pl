@@ -34,8 +34,8 @@ coletar_observacoes :-
     format("Usuario e estudante (tem desconto)? (s/n) "),
     read(S0), downcase_atom(S0, S),
     (S == s -> assertz(obs(tem_desconto_estudantil(sim))) ; assertz(obs(tem_desconto_estudantil(nao)))),
-    format("E qual e seu budget? (alto/medio/baixo) "),
-    read(Bud), downcase_atom(BudAtom, Bud),
+    format("E qual e seu orcamento? (alto/medio/baixo) "),
+    read(Orc), downcase_atom(BudAtom, Orc),
     ( member(BudAtom, [alto,medio,baixo]) -> assertz(obs(budget(BudAtom))); format("Entrada invalida. Use alto/medio/baixo.~n"), coletar_observacoes ).
 
 cleanup :- retractall(obs(_)), retractall(fired_rule(_)).
