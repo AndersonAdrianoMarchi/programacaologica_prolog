@@ -1,10 +1,10 @@
 🧠 Sistema Especialista – Recomendador de Planos de Streaming
 
 Disciplina: Linguagem de Programação e Paradigmas
-Professor: Esp. Ademar Perfoll Junior
+Professor: Ademar Perfoll Junior
 Curso: Sistemas de Informação
 Trabalho 03 – Programação Lógica (Prolog)
-Desenvolvido por: @Anderson_Marchi
+Desenvolvido por: @Anderson_Marchi (@AndersonAdrianoMarchi)
 
 🎯 Objetivo do Projeto
 
