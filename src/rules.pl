@@ -7,8 +7,8 @@
 meta(resultado(plano(Plano), preco_mensal(Preco), preco_anual(PrecoAnual), addons(Addons), motivos(Motivos))) :-
     cleanup_fired,
     derive_needs(Needs),
-    evaluate_budget(Budget),
-    match_plan(Needs, Budget, Plano),
+    evaluate_budget(Orcamento),
+    match_plan(Needs, Orcamento, Plano),
     plano(Plano, Preco, _, _, _),
     calculate_annual(Preco, PrecoAnual),
     findall(A, recommend_addon(A), Addons0),
@@ -29,62 +29,62 @@ derive_needs(Needs) :-
     Needs = ok.
 
 %% ====== Oraculo de budget ======
-evaluate_budget(high) :- obs(budget(alto)), assert_fired(budget_alto), !.
-evaluate_budget(medium) :- obs(budget(medio)), assert_fired(budget_medio), !.
-evaluate_budget(low) :- obs(budget(baixo)), assert_fired(budget_baixo), !.
-evaluate_budget(medium) :- % default se nao informado
-    assert_fired(budget_default), !.
+evaluate_budget(alto) :- obs(orcamento(alto)), assert_fired(orc_alto), !.
+evaluate_budget(medio) :- obs(orcamento(medio)), assert_fired(orc_medio), !.
+evaluate_budget(baixo) :- obs(orcamento(baixo)), assert_fired(orc_baixo), !.
+evaluate_budget(medio) :- % default se nao informado
+    assert_fired(orc_default), !.
 
 %% ====== Regras para recomendar add-ons ======
-recommend_addon(sports) :- obs(pref_esportes(sim)), assert_fired(addon_sports).
+recommend_addon(esportes) :- obs(pref_esportes(sim)), assert_fired(addon_esportes).
 recommend_addon(kids)   :- obs(have_kids(sim)), assert_fired(addon_kids).
-recommend_addon(music)  :- obs(pref_musica(sim)), assert_fired(addon_music).
+recommend_addon(musica)  :- obs(pref_musica(sim)), assert_fired(addon_musica).
 
 %% ====== Regras de mapeamento necessidade -> plano (pelo menos 8 regras/combinações) ======
 
 % Regra 1: estudante que tem budget baixo -> plano student
-match_plan(_, low, student) :-
-    obs(tem_desconto_estudantil(sim)), assert_fired(rule_student_low), !.
+match_plan(_, baixo, estudante) :-
+    obs(tem_desconto_estudantil(sim)), assert_fired(rule_estudante_baixo), !.
 
 % Regra 2: familia grande (marcou usuarios_familia) e precisa muitas telas -> family
-match_plan(_, _, family) :-
+match_plan(_, _, familia) :-
     obs(usuarios_familia(sim)),
     obs(simultaneas(N)), N >= 4,
-    assert_fired(rule_family), !.
+    assert_fired(rule_familia), !.
 
 % Regra 3: precisa de 4K e muitas telas -> premium
-match_plan(_, high, premium) :-
+match_plan(_, alto, premium) :-
     obs(pref_alta_resolucao(sim)),
     obs(simultaneas(N)), N >= 2,
-    assert_fired(rule_4k_high), !.
+    assert_fired(rule_4k_alto), !.
 
 % Regra 4: precisa de 4K, budget medio -> premium (prioriza qualidade)
-match_plan(_, medium, premium) :-
+match_plan(_, medio, premium) :-
     obs(pref_alta_resolucao(sim)),
     obs(simultaneas(N)), N >= 2,
-    assert_fired(rule_4k_medium), !.
+    assert_fired(rule_4k_medio), !.
 
 % Regra 5: precisa de 2 telas e sem anuncios -> standard
-match_plan(_, medium, standard) :-
+match_plan(_, medio, padrao) :-
     obs(simultaneas(2)),
     obs(pref_sem_anuncios(sim)),
-    assert_fired(rule_standard_2_noads), !.
+    assert_fired(rule_padrao_2_noads), !.
 
 % Regra 6: baixa necessidade (1 tela, quer barato) -> lite
-match_plan(_, low, lite) :-
+match_plan(_, baixo, lite) :-
     obs(simultaneas(1)),
     obs(pref_sem_anuncios(nao)),
-    assert_fired(rule_lite_low), !.
+    assert_fired(rule_lite_baixo), !.
 
 % Regra 7: 1 tela, prefere sem anuncios e budget low/medium -> basic
-match_plan(_, medium, basic) :-
+match_plan(_, medio, basico) :-
     obs(simultaneas(1)),
     obs(pref_sem_anuncios(sim)),
-    assert_fired(rule_basic_noads), !.
+    assert_fired(rule_basico_noads), !.
 
 % Regra 8: Default: standard se nada mais se aplica
-match_plan(_, _, standard) :-
-    assert_fired(rule_default_standard).
+match_plan(_, _, padrao) :-
+    assert_fired(rule_default_padrao).
 
 % Observacao: a ordem das regras define prioridades; use cortes (!) para impedir backtracking onde apropriado.
 
