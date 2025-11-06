@@ -42,6 +42,7 @@ Carregue o sistema:
 
 ?- ['main.pl'].
 
+? make.
 
 Execute o programa:
 
